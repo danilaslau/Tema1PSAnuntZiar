@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Tema1PSAnuntZiarModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Tema1PSAnuntZiarModelStoreContainer">
+          <EntitySet Name="Advertisements" EntityType="Tema1PSAnuntZiarModel.Store.Advertisements" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="Tema1PSAnuntZiarModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Advertisements_Users" Association="Tema1PSAnuntZiarModel.Store.FK_Advertisements_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Advertisements" EntitySet="Advertisements" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Advertisements">
+          <Key>
+            <PropertyRef Name="AdID" />
+          </Key>
+          <Property Name="AdID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OccurrenceNo" Type="int" Nullable="false" />
+          <Property Name="Description" Type="ntext" Nullable="false" />
+          <Property Name="Picture1" Type="image" />
+          <Property Name="Picture2" Type="image" />
+          <Property Name="Picture3" Type="image" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Username" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Role" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_Advertisements_Users">
+          <End Role="Users" Type="Tema1PSAnuntZiarModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Advertisements" Type="Tema1PSAnuntZiarModel.Store.Advertisements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Advertisements">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Tema1PSAnuntZiarModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Tema1PSAnuntZiarEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Advertisements" EntityType="Tema1PSAnuntZiarModel.Advertisement" />
+          <EntitySet Name="Users" EntityType="Tema1PSAnuntZiarModel.User" />
+          <AssociationSet Name="FK_Advertisements_Users" Association="Tema1PSAnuntZiarModel.FK_Advertisements_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Advertisements" EntitySet="Advertisements" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Advertisement">
+          <Key>
+            <PropertyRef Name="AdID" />
+          </Key>
+          <Property Name="AdID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="OccurrenceNo" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Picture1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Picture2" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Picture3" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Tema1PSAnuntZiarModel.FK_Advertisements_Users" FromRole="Advertisements" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Advertisements" Relationship="Tema1PSAnuntZiarModel.FK_Advertisements_Users" FromRole="Users" ToRole="Advertisements" />
+        </EntityType>
+        <Association Name="FK_Advertisements_Users">
+          <End Role="Users" Type="Tema1PSAnuntZiarModel.User" Multiplicity="0..1" />
+          <End Role="Advertisements" Type="Tema1PSAnuntZiarModel.Advertisement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Advertisements">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Tema1PSAnuntZiarModelStoreContainer" CdmEntityContainer="Tema1PSAnuntZiarEntities">
+          <EntitySetMapping Name="Advertisements">
+            <EntityTypeMapping TypeName="Tema1PSAnuntZiarModel.Advertisement">
+              <MappingFragment StoreEntitySet="Advertisements">
+                <ScalarProperty Name="AdID" ColumnName="AdID" />
+                <ScalarProperty Name="OccurrenceNo" ColumnName="OccurrenceNo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Picture1" ColumnName="Picture1" />
+                <ScalarProperty Name="Picture2" ColumnName="Picture2" />
+                <ScalarProperty Name="Picture3" ColumnName="Picture3" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Tema1PSAnuntZiarModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
